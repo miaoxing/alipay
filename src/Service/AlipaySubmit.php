@@ -3,30 +3,19 @@
 namespace Miaoxing\Alipay\Service;
 
 use plugins\alipay\services\DOMDocument;
-use plugins\alipay\services\已排序要签名的数组;
-use plugins\alipay\services\提交方式;
-use plugins\alipay\services\提交表单HTML文本;
-use plugins\alipay\services\支付宝处理结果;
-use plugins\alipay\services\支付宝返回处理结果;
-use plugins\alipay\services\文件完整绝对路径;
-use plugins\alipay\services\文件类型的参数名;
-use plugins\alipay\services\确认按钮显示文字;
-use plugins\alipay\services\要请求的参数数组;
-use plugins\alipay\services\要请求的参数数组字符串;
-use plugins\alipay\services\请求前的参数数组;
-use plugins\alipay\services\请求参数数组;
 
 class AlipaySubmit extends \miaoxing\plugin\BaseService
 {
-    var $alipayConfig;
+    public $alipayConfig;
     /**
      *支付宝网关地址（新）
      */
-    var $alipayGatewayNew = 'https://mapi.alipay.com/gateway.do?';
+    public $alipayGatewayNew = 'https://mapi.alipay.com/gateway.do?';
 
     public function setAlipayConfig($alipayConfig)
     {
         $this->alipayConfig = $alipayConfig;
+
         return $this;
     }
 
@@ -42,11 +31,11 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
         $alipayConfig = [];
         //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         //合作身份者id，以2088开头的16位纯数字
-        $alipayConfig['partner']        = $alipay->partner;
+        $alipayConfig['partner'] = $alipay->partner;
 
         //安全检验码，以数字和字母组成的32位字符
         //如果签名方式设置为“MD5”时，请设置该参数
-        $alipayConfig['key']            = $alipay->key;
+        $alipayConfig['key'] = $alipay->key;
 
         //商户的私钥（后缀是.pen）文件相对路径
         //如果签名方式设置为“0001”时，请设置该参数
@@ -77,18 +66,18 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $paraSort 已排序要签名的数组
      * return 签名结果字符串
      */
-    function buildRequestMysign($paraSort)
+    public function buildRequestMysign($paraSort)
     {
         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         $prestr = wei()->alipayCore->createLinkstring($paraSort);
 
-        $mysign = "";
+        $mysign = '';
         switch (strtoupper(trim($this->alipayConfig['sign_type']))) {
-            case "MD5":
+            case 'MD5':
                 $mysign = wei()->alipayMD5->md5Sign($prestr, $this->alipayConfig['key']);
                 break;
             default:
-                $mysign = "";
+                $mysign = '';
         }
 
         return $mysign;
@@ -99,7 +88,7 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $paraTemp 请求前的参数数组
      * @return 要请求的参数数组
      */
-    function buildRequestPara($paraTemp)
+    public function buildRequestPara($paraTemp)
     {
         //除去待签名参数数组中的空值和签名参数
         $para_filter = wei()->alipayCore->paraFilter($paraTemp);
@@ -122,7 +111,7 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $para_temp 请求前的参数数组
      * @return 要请求的参数数组字符串
      */
-    function buildRequestParaToString($para_temp)
+    public function buildRequestParaToString($para_temp)
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
@@ -140,14 +129,14 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $button_name 确认按钮显示文字
      * @return 提交表单HTML文本
      */
-    function buildRequestForm($para_temp, $method, $button_name)
+    public function buildRequestForm($para_temp, $method, $button_name)
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
 
-        $sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->alipayGatewayNew."_input_charset=".trim(strtolower($this->alipayConfig['input_charset']))."' method='".$method."'>";
-        while (list ($key, $val) = each($para)) {
-            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+        $sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->alipayGatewayNew.'_input_charset='.trim(strtolower($this->alipayConfig['input_charset']))."' method='".$method."'>";
+        while (list($key, $val) = each($para)) {
+            $sHtml .= "<input type='hidden' name='".$key."' value='".$val."'/>";
         }
 
         //submit按钮控件请不要含有name属性
@@ -163,7 +152,7 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $para_temp 请求参数数组
      * @return 支付宝处理结果
      */
-    function buildRequestHttp($para_temp)
+    public function buildRequestHttp($para_temp)
     {
         $sResult = '';
 
@@ -183,12 +172,12 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * @param $file_name 文件完整绝对路径
      * @return 支付宝返回处理结果
      */
-    function buildRequestHttpInFile($para_temp, $file_para_name, $file_name)
+    public function buildRequestHttpInFile($para_temp, $file_para_name, $file_name)
     {
 
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
-        $para[$file_para_name] = "@".$file_name;
+        $para[$file_para_name] = '@'.$file_name;
 
         //远程获取数据
         $sResult = wei()->alipayCore->getHttpResponsePOST($this->alipayGatewayNew, $this->alipayConfig['cacert'], $para, trim(strtolower($this->alipayConfig['input_charset'])));
@@ -201,14 +190,14 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
      * 注意：该功能PHP5环境及以上支持，因此必须服务器、本地电脑中装有支持DOMDocument、SSL的PHP配置环境。建议本地调试时使用PHP开发软件
      * return 时间戳字符串
      */
-    function query_timestamp()
+    public function query_timestamp()
     {
-        $url = $this->alipayGatewayNew."service=query_timestamp&partner=".trim(strtolower($this->alipayConfig['partner']))."&_input_charset=".trim(strtolower($this->alipayConfig['input_charset']));
-        $encrypt_key = "";
+        $url = $this->alipayGatewayNew.'service=query_timestamp&partner='.trim(strtolower($this->alipayConfig['partner'])).'&_input_charset='.trim(strtolower($this->alipayConfig['input_charset']));
+        $encrypt_key = '';
 
         $doc = new DOMDocument();
         $doc->load($url);
-        $itemEncrypt_key = $doc->getElementsByTagName("encrypt_key");
+        $itemEncrypt_key = $doc->getElementsByTagName('encrypt_key');
         $encrypt_key = $itemEncrypt_key->item(0)->nodeValue;
 
         return $encrypt_key;

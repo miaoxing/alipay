@@ -1,4 +1,4 @@
-# 演示
+# 支付宝
 
 [![Build Status](https://img.shields.io/travis/miaoxing/alipay/master.svg?style=flat-square)](https://travis-ci.org/miaoxing/alipay)
 [![Coverage Status](https://img.shields.io/coveralls/miaoxing/alipay.svg?style=flat-square)](https://coveralls.io/r/miaoxing/alipay?branch=master)

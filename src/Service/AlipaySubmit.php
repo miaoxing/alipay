@@ -32,7 +32,7 @@ class AlipaySubmit extends \miaoxing\plugin\BaseService
 
     public function getDefaultConfig()
     {
-        $dir = wei()->plugin->getOneById('alipay')->getBasePath() . '/configs';
+        $dir = wei()->plugin->getOneById('alipay')->getBasePath() . '/configs/';
         $publicKey = $dir . 'alipay_public_key.pem';
         $privateKey = $dir . 'rsa_private_key.pem';
         $cacert = $dir . 'cacert.pem';

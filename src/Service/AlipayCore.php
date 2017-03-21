@@ -2,21 +2,10 @@
 
 namespace Miaoxing\Alipay\Service;
 
-use plugins\alipay\services\指定URL完整路径地址;
-use plugins\alipay\services\指定当前工作目录绝对路径;
-use plugins\alipay\services\排序前的数组;
-use plugins\alipay\services\签名参数组;
-use plugins\alipay\services\编码格式;
-use plugins\alipay\services\要写入日志里的文本内容;
-use plugins\alipay\services\请求的数据;
-use plugins\alipay\services\输入的编码格式;
-use plugins\alipay\services\输入的解码格式;
-use plugins\alipay\services\输出的编码格式;
-use plugins\alipay\services\输出的解码格式;
-use plugins\alipay\services\需要拼接的数组;
-use plugins\alipay\services\需要编码的字符串;
-use plugins\alipay\services\需要解码的字符串;
-
+/**
+ * @SuppressWarnings(PHPMD)
+ * @codingStandardsIgnoreFile
+ */
 class AlipayCore extends \miaoxing\plugin\BaseService
 {
     /**

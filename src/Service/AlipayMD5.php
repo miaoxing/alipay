@@ -2,10 +2,10 @@
 
 namespace Miaoxing\Alipay\Service;
 
-use plugins\alipay\services\私钥;
-use plugins\alipay\services\签名结果;
-use plugins\alipay\services\需要签名的字符串;
-
+/**
+ * @SuppressWarnings(PHPMD)
+ * @codingStandardsIgnoreFile
+ */
 class AlipayMD5 extends \miaoxing\plugin\BaseService
 {
     /**

@@ -2,8 +2,12 @@
 
 namespace Miaoxing\Alipay\Service;
 
-use plugins\alipay\services\DOMDocument;
+use DOMDocument;
 
+/**
+ * @SuppressWarnings(PHPMD)
+ * @codingStandardsIgnoreFile
+ */
 class AlipaySubmit extends \miaoxing\plugin\BaseService
 {
     public $alipayConfig;

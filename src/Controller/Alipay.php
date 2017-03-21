@@ -6,7 +6,6 @@ use Wei\Request;
 
 class Alipay extends \miaoxing\plugin\BaseController
 {
-
     protected $guestPages = [
         'alipay',
     ];

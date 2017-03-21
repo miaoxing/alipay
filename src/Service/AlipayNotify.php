@@ -2,13 +2,10 @@
 
 namespace Miaoxing\Alipay\Service;
 
-use plugins\alipay\services\服务器ATN结果;
-use plugins\alipay\services\签名验证结果;
-use plugins\alipay\services\返回的签名结果;
-use plugins\alipay\services\通知校验ID;
-use plugins\alipay\services\通知返回来的参数数组;
-use plugins\alipay\services\验证结果;
-
+/**
+ * @SuppressWarnings(PHPMD)
+ * @codingStandardsIgnoreFile
+ */
 class AlipayNotify extends \miaoxing\plugin\BaseService
 {
     /**

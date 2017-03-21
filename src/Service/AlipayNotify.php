@@ -11,16 +11,17 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
     /**
      * HTTPS形式消息验证地址
      */
-    var $httpsVerifyUrl = 'https://mapi.alipay.com/gateway.do?service=notify_verify&';
+    public $httpsVerifyUrl = 'https://mapi.alipay.com/gateway.do?service=notify_verify&';
     /**
      * HTTP形式消息验证地址
      */
-    var $httpVerifyUrl = 'http://notify.alipay.com/trade/notify_query.do?';
-    var $alipayConfig = [];
+    public $httpVerifyUrl = 'http://notify.alipay.com/trade/notify_query.do?';
+    public $alipayConfig = [];
 
     public function setAlipayConfig($alipayConfig)
     {
         $this->alipayConfig = $alipayConfig;
+
         return $this;
     }
 
@@ -30,16 +31,17 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
      */
     public function verifyNotify($data)
     {
-        if (empty($data)) {//判断POST来的数组是否为空
+        if (empty($data)) {
+            //判断POST来的数组是否为空
             return false;
         } else {
-            $isSign = $this->getSignVeryfy($data, $data["sign"]);
+            $isSign = $this->getSignVeryfy($data, $data['sign']);
             $responseTxt = 'true';
-            if (!empty($data["notify_id"])) {
-                $responseTxt = $this->getResponse($data["notify_id"]);
+            if (!empty($data['notify_id'])) {
+                $responseTxt = $this->getResponse($data['notify_id']);
             }
 
-            if (preg_match("/true$/i", $responseTxt) && $isSign) {
+            if (preg_match('/true$/i', $responseTxt) && $isSign) {
                 return true;
             } else {
                 return false;
@@ -53,15 +55,16 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
      */
     public function verifyReturn()
     {
-        if (empty($_GET)) {//判断POST来的数组是否为空
+        if (empty($_GET)) {
+            //判断POST来的数组是否为空
             return false;
         } else {
             //生成签名结果
-            $isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
+            $isSign = $this->getSignVeryfy($_GET, $_GET['sign']);
             //获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
             $responseTxt = 'true';
-            if (!empty($_GET["notify_id"])) {
-                $responseTxt = $this->getResponse($_GET["notify_id"]);
+            if (!empty($_GET['notify_id'])) {
+                $responseTxt = $this->getResponse($_GET['notify_id']);
             }
 
             // 写日志记录
@@ -70,14 +73,14 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
             } else {
                 $isSignStr = 'false';
             }
-            $log_text = "responseTxt=" . $responseTxt . "\n return_url_log:isSign=" . $isSignStr . ",";
+            $log_text = 'responseTxt=' . $responseTxt . "\n return_url_log:isSign=" . $isSignStr . ',';
             $log_text = $log_text . createLinkString($_GET);
             wei()->logger->info($log_text);
 
             //验证
             //$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
             //isSign的结果不是true，与安全校验码、请求时的参数格式（如：带自定义参数等）、编码格式有关
-            if (preg_match("/true$/i", $responseTxt) && $isSign) {
+            if (preg_match('/true$/i', $responseTxt) && $isSign) {
                 return true;
             } else {
                 return false;
@@ -104,7 +107,7 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
 
         $isSgin = false;
         switch (strtoupper(trim($this->alipayConfig['sign_type']))) {
-            case "MD5":
+            case 'MD5':
                 $isSgin = wei()->alipayMD5->md5Verify($prestr, $sign, $this->alipayConfig['key']);
                 break;
             default:
@@ -133,7 +136,7 @@ class AlipayNotify extends \miaoxing\plugin\BaseService
         } else {
             $veryfy_url = $this->httpVerifyUrl;
         }
-        $veryfy_url = $veryfy_url . "partner=" . $partner . "&notify_id=" . $notify_id;
+        $veryfy_url = $veryfy_url . 'partner=' . $partner . '&notify_id=' . $notify_id;
         $responseTxt = wei()->alipayCore->getHttpResponseGET($veryfy_url, $this->alipayConfig['cacert']);
 
         return $responseTxt;

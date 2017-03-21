@@ -14,9 +14,10 @@ class AlipayMD5 extends \miaoxing\plugin\BaseService
      * @param $key 私钥
      * return 签名结果
      */
-    function md5Sign($prestr, $key)
+    public function md5Sign($prestr, $key)
     {
         $prestr = $prestr . $key;
+
         return md5($prestr);
     }
 
@@ -27,7 +28,7 @@ class AlipayMD5 extends \miaoxing\plugin\BaseService
      * @param $key 私钥
      * return 签名结果
      */
-    function md5Verify($prestr, $sign, $key)
+    public function md5Verify($prestr, $sign, $key)
     {
         $prestr = $prestr . $key;
         $mysgin = md5($prestr);

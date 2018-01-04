@@ -6,7 +6,7 @@ namespace Miaoxing\Alipay\Service;
  * @SuppressWarnings(PHPMD)
  * @codingStandardsIgnoreFile
  */
-class AlipayMD5 extends \miaoxing\plugin\BaseService
+class AlipayMD5 extends \Miaoxing\Plugin\BaseService
 {
     /**
      * 签名字符串

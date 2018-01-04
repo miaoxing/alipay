@@ -6,7 +6,7 @@ namespace Miaoxing\Alipay\Service;
  * @SuppressWarnings(PHPMD)
  * @codingStandardsIgnoreFile
  */
-class AlipayNotify extends \miaoxing\plugin\BaseService
+class AlipayNotify extends \Miaoxing\Plugin\BaseService
 {
     /**
      * HTTPS形式消息验证地址

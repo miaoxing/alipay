@@ -6,7 +6,7 @@ namespace Miaoxing\Alipay\Service;
  * @SuppressWarnings(PHPMD)
  * @codingStandardsIgnoreFile
  */
-class AlipayCore extends \miaoxing\plugin\BaseService
+class AlipayCore extends \Miaoxing\Plugin\BaseService
 {
     /**
      * 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串

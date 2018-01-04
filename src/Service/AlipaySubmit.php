@@ -8,7 +8,7 @@ use DOMDocument;
  * @SuppressWarnings(PHPMD)
  * @codingStandardsIgnoreFile
  */
-class AlipaySubmit extends \miaoxing\plugin\BaseService
+class AlipaySubmit extends \Miaoxing\Plugin\BaseService
 {
     public $alipayConfig;
     /**

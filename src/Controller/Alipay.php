@@ -4,7 +4,7 @@ namespace Miaoxing\Alipay\Controller;
 
 use Wei\Request;
 
-class Alipay extends \miaoxing\plugin\BaseController
+class Alipay extends \Miaoxing\Plugin\BaseController
 {
     protected $guestPages = [
         'alipay',
